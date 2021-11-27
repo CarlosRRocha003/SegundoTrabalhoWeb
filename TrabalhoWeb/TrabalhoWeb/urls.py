@@ -17,5 +17,6 @@ from django.urls import path
 from TrabalhoWeb import views
 
 urlpatterns = [
-    path('', views.home)
+    path('', views.home),
+    path('SegundaPagina', views.SegundaPagina, name='segunda')
 ]
