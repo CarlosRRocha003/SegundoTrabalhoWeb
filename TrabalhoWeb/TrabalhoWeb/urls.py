@@ -20,8 +20,9 @@ from TrabalhoWeb import views
 
 urlpatterns = [
     path('', views.home),
-    path('SegundaPagina', views.SegundaPagina, name='segunda'),
-    path('criaCandidato/', views.CandidatoView.as_view(), name='cria-candidato'),
-    path('listaCandidato/', views.CandidatoListView.as_view(), name='lista-candidato'),
+    path('CriaCandidato', views.CandidatoView.as_view(), name='cria-candidato'),
+    path('ListaCandidato', views.CandidatoListView.as_view(), name='lista-candidato'),
+    path('CriaEmpresas', views.EmpresaView.as_view(), name='cria-empresa'),
+    path('ListaEmpresas', views.EmpresaListView.as_view(), name='lista-empresa')
 
 ]
