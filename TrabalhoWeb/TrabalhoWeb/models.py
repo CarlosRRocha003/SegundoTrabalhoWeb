@@ -28,7 +28,7 @@ class Candidato(models.Model):
     nome = models.CharField(max_length=100, help_text='Nome')
     email = models.EmailField(help_text='Email', max_length=254)
     telefone = models.CharField(help_text='Telefone com DDD e DDI', max_length=20)
-    dtNasc = models.DateField(help_text='Nascimento no formado DD/MM/AAAA', verbose_name='Data de Nascimento')
+    dtNasc = models.DateField(verbose_name='Data de Nascimento', help_text='Nascimento no formado DD/MM/AAAA')
     cidade = models.CharField(max_length=254, help_text='Cidade')
     estado = models.CharField(max_length=254, help_text='Estado') 
     pais = models.CharField(max_length=254, help_text='País')
