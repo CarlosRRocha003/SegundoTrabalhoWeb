@@ -14,9 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from TrabalhoWeb.forms import CandidatoModel2Form
+import TrabalhoWeb.views
 from TrabalhoWeb import views
 
 urlpatterns = [
     path('', views.home),
-    path('SegundaPagina', views.SegundaPagina, name='segunda')
+    path('SegundaPagina', views.SegundaPagina, name='segunda'),
+    path('criaCandidato/', views.CandidatoView.as_view(), name='cria-candidato'),
+    path('listaCandidato/', views.CandidatoListView.as_view(), name='lista-candidato'),
+
 ]
