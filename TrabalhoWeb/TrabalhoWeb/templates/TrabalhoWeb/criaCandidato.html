@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cria Candidato</title>
+<link rel = "stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+    <h1>Cria um Candidato</h1>
+    <form action="" method="POST">
+    {% csrf_token %}
+    <table class='formulario'>
+    {{ formulario.as_table}}
+    </table>
+    <button type="submit">Cria Candidato</button>
+    </form>
+</body>
+</html>
