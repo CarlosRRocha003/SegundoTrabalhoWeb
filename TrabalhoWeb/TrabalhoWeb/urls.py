@@ -27,9 +27,8 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(template_name='TrabalhoWeb/registro/login2.html'), name='sec-login'), 
     path('accounts/profile/', views.paginaSecreta, name='sec-paginaSecreta'), 
     path('accounts/registro/', views.registro, name='sec-registro'),
-    path('SegundaPagina', views.SegundaPagina, name='segunda'),
-    path('criaCandidato/', views.CandidatoView.as_view(), name='cria-candidato'),
-    path('criaUsuario/', views.UsuarioView.as_view(), name='cria-usuario'),
-    path('listaCandidato/', views.CandidatoListView.as_view(), name='lista-candidato'),
-
+    path('CriaCandidato', views.CandidatoView.as_view(), name='cria-candidato'),
+    path('ListaCandidato', views.CandidatoListView.as_view(), name='lista-candidato'),
+    path('CriaEmpresas', views.EmpresaView.as_view(), name='cria-empresa'),
+    path('ListaEmpresas', views.EmpresaListView.as_view(), name='lista-empresa')
 ]
