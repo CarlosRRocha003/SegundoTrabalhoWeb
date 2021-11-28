@@ -1,8 +1,6 @@
 const selectElement = document.querySelector('.datao');
-console.log("AAAAAAAA");
 
 selectElement.addEventListener('change', function () {
-        console.log('awdqwj ');
         // recupera o campo username do formulário
         var campoDtNasc = document.getElementById('dtNasc');
         console.log('Mudou ', campoDtNasc.value);
