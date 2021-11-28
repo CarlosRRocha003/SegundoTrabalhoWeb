@@ -25,10 +25,11 @@ from TrabalhoWeb import views
 urlpatterns = [
     path('', views.LoginView.as_view()),
     path('accounts/', views.homeSec, name='sec-home'),
-    path('accounts/login/', LoginView.as_view(template_name='TrabalhoWeb/registro/login2.html'), name='sec-login'), 
+    path('accounts/login/', LoginView.as_view(template_name='TrabalhoWeb/registro/login.html'), name='sec-login'), 
     path('accounts/profile/', views.paginaSecreta, name='sec-paginaSecreta'), 
     path('accounts/registro/', views.registro, name='sec-registro'),
-    path('accounts/tipoConta/', views.tipoConta, name='sec-tipoConta'),
+    path('accounts/paginaSecreta/', views.paginaSecreta, name='sec-paginaSecreta'),
+    path('accounts/home/', views.home, name='home'),
     path('logout/', LogoutView.as_view( next_page=reverse_lazy('sec-home')), name='sec-logout'),
     path('CriaCandidato', views.CandidatoView.as_view(), name='cria-candidato'),
     path('ListaCandidato', views.CandidatoListView.as_view(), name='lista-candidato'),

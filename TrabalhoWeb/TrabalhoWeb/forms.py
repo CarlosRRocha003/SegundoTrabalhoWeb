@@ -9,7 +9,6 @@ class CandidatoModel2Form(forms.ModelForm):
         fields = '__all__'
 
 class UsuarioModel2Form(forms.ModelForm):
-    
     class Meta:
         model = Usuario
         fields = '__all__'

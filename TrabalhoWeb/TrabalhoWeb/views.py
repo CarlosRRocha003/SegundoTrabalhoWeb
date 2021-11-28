@@ -9,13 +9,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView
 # Create your views here.
 def home(request):
-    return render(request, 'TrabalhoWeb/home.html')
+    try:
+        usuario = Usuario.objects.get(pk=request.user.username)
+        if usuario.tipo == "EMPRESA":
+            return render(request, 'TrabalhoWeb/registro/homeEmpresa.html')
+        else:
+            print(usuario.tipo)
+            return render(request, 'TrabalhoWeb/registro/homeCandidato.html')
+    except:
+        return render(request, 'TrabalhoWeb/registro/registro.html')
 
 def loginHome(request):
     return render(request, 'TrabalhoWeb/login.html')
 
 def paginaSecreta(request):
-    return render(request, 'TrabalhoWeb/paginaSecreta.html')
+    return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
 
 def SegundaPagina(request):
     return render(request, 'TrabalhoWeb/criaCandidato.html')
@@ -26,27 +34,31 @@ def homeSec(request):
 def registro(request): 
     if request.method == 'POST': 
         formulario = UserCreationForm(request.POST) 
-        formulario.__getattribute__('username')
         if formulario.is_valid(): 
             formulario.save() 
-            LoginView.as_view(template_name='TrabalhoWeb/registro/login2.html')
-            return redirect('sec-home') 
+            return redirect('sec-login') 
     else: 
         formulario = UserCreationForm() 
     context = {'form': formulario} 
     return render(request, 'TrabalhoWeb/registro/registro.html', context)
 
-def tipoConta(request): 
+def paginaSecreta(request): 
     if request.method == 'POST': 
-        tipo = request.POST['tipo'] 
-        if tipo == 'CANDIDATO':  
-            return redirect('cria-candidato') 
+        formulario = UsuarioModel2Form(request.POST)
+        if formulario.is_valid():
+            usuario = formulario.save()
+            usuario.save()
+            return HttpResponseRedirect(reverse_lazy("sec-paginaSecreta"))
         else:
-            return redirect('cria-empresa')
-    else: 
-        return render(request, 'TrabalhoWeb/registro/tipoConta.html')
-    context = {'form': formulario} 
-    return render(request, 'TrabalhoWeb/registro/registro.html', context)
+            return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
+    else:
+        try:
+            usuario = Usuario.objects.get(pk=request.user.username)
+            if usuario:
+                print("redirect")
+                return redirect('home')
+        except:
+            return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
 
 class UsuarioView(View):
     def get(self, request, *args, **kwargs):

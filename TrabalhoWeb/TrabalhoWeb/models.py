@@ -6,8 +6,7 @@ USER_CHOICES = (
 )
 
 class Usuario(models.Model):
-    usuario = models.CharField(max_length=100, help_text='Usuario')
-    senha = models.CharField(max_length=100, help_text='Senha')
+    usuario = models.CharField(max_length=100, help_text='Usuario', primary_key=True)
     tipo = models.CharField(choices=USER_CHOICES, max_length=10)
 
     def __str__(self):
