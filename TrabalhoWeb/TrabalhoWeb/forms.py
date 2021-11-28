@@ -12,6 +12,7 @@ class UsuarioModel2Form(forms.ModelForm):
     
     class Meta:
         model = Usuario
+        fields = '__all__'
 
 
 class EmpresaModel2Form(forms.ModelForm):   

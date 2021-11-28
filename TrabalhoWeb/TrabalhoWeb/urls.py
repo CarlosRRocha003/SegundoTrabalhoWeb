@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.urls import path
 from django.urls import include
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from TrabalhoWeb.forms import CandidatoModel2Form
+from django.urls.base import reverse_lazy
 
 import TrabalhoWeb.views
 from TrabalhoWeb import views
@@ -27,6 +28,8 @@ urlpatterns = [
     path('accounts/login/', LoginView.as_view(template_name='TrabalhoWeb/registro/login2.html'), name='sec-login'), 
     path('accounts/profile/', views.paginaSecreta, name='sec-paginaSecreta'), 
     path('accounts/registro/', views.registro, name='sec-registro'),
+    path('accounts/tipoConta/', views.tipoConta, name='sec-tipoConta'),
+    path('logout/', LogoutView.as_view( next_page=reverse_lazy('sec-home')), name='sec-logout'),
     path('CriaCandidato', views.CandidatoView.as_view(), name='cria-candidato'),
     path('ListaCandidato', views.CandidatoListView.as_view(), name='lista-candidato'),
     path('CriaEmpresas', views.EmpresaView.as_view(), name='cria-empresa'),

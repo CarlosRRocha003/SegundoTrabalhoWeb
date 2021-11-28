@@ -6,6 +6,7 @@ from TrabalhoWeb.models import Candidato, Usuario, Empresa
 from TrabalhoWeb.forms import CandidatoModel2Form, UsuarioModel2Form, EmpresaModel2Form
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.views import LoginView
 # Create your views here.
 def home(request):
     return render(request, 'TrabalhoWeb/home.html')
@@ -25,34 +26,27 @@ def homeSec(request):
 def registro(request): 
     if request.method == 'POST': 
         formulario = UserCreationForm(request.POST) 
+        formulario.__getattribute__('username')
         if formulario.is_valid(): 
             formulario.save() 
+            LoginView.as_view(template_name='TrabalhoWeb/registro/login2.html')
             return redirect('sec-home') 
     else: 
         formulario = UserCreationForm() 
     context = {'form': formulario} 
     return render(request, 'TrabalhoWeb/registro/registro.html', context)
 
-class LoginView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'TrabalhoWeb/login.html')
-
-    def post(self, request, *args, **kwargs):
-        username = request.POST['username']
-        password = request.POST['password']
-        print(username,password)
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            type = request.GET['tipo']
-            if type == "CANDIDATO":
-                context = { 'formulario': CandidatoModel2Form, }
-                return render(request,"TrabalhoWeb/criaCanditado.html", context)
-            else:
-                return render(request,"TrabalhoWeb/hello.html")
+def tipoConta(request): 
+    if request.method == 'POST': 
+        tipo = request.POST['tipo'] 
+        if tipo == 'CANDIDATO':  
+            return redirect('cria-candidato') 
         else:
-            context = { 'formulario': UsuarioModel2Form, }
-            return render(request,"TrabalhoWeb/criaUsuario.html", context)
+            return redirect('cria-empresa')
+    else: 
+        return render(request, 'TrabalhoWeb/registro/tipoConta.html')
+    context = {'form': formulario} 
+    return render(request, 'TrabalhoWeb/registro/registro.html', context)
 
 class UsuarioView(View):
     def get(self, request, *args, **kwargs):

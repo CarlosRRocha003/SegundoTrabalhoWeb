@@ -3,4 +3,12 @@
 {% block content %} 
 <h2>Página inicial de controle de acesso de usuário</h2> 
 <h6>registro/homeSec.html</h6> 
+{% for u in usuario %}
+{% if u.usuario == user.username %}
+
+{% endif %}
+{% endfor %}
+{% if u.usuario != user.username %}
+
+{% endif %}
 {% endblock %}
