@@ -1,0 +1,26 @@
+{% extends 'TrabalhoWeb/registro/base.html' %} 
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cria Empresa</title>
+<link rel = "stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body style="text-align: center;">
+    {% if user.is_authenticated %} 
+    <h1>Cria um Empresa</h1>
+    <form action="" method="POST" style="display: inline-block;">
+    {% csrf_token %}
+    <table class='formulario' style="margin-left: -25%;display: inline-block;">
+    <input type="hidden" id="usuario" name="usuario" value={{ user.usuario }} readonly></input>
+    {{ formulario.as_table}}
+    </table>
+    <div>
+    <button class="btn btn-primary" type="submit">Cria Empresa</button>
+    </div>
+    </form>
+    {% endif %} 
+</body>
+</html>
+{% endblock %}
