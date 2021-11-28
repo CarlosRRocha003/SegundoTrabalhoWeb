@@ -133,7 +133,7 @@ class CandidatoUpdateView(View):
         user = request.user
         candidato = Candidato.objects.get(pk=user.usuario)
         formulario = CandidatoModel2Form(instance=candidato)
-        context = {'candidato': formulario, }
+        context = {'candidato': formulario, 'dtNasc': candidato.dtNasc}
         return render(request, 'TrabalhoWeb/atualizaCandidato.html', context)
 
     def post(self, request, *args, **kwargs):
