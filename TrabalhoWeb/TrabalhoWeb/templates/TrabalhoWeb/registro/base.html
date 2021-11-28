@@ -16,9 +16,9 @@
   <li><a href="{% url 'sec-logout' %}" class="nav-link px-2 link-dark">Logout</a></li>
   {% else %} 
   <li><a href="{% url 'sec-registro' %}" class="nav-link px-2 link-dark">Registrar</a></li>
-  <li><a href="{% url 'sec-login' %}?next={% url 'sec-paginaSecreta' %}" class="nav-link px-2 link-dark">Login</a></li>
+  <li><a href="{% url 'sec-login' %}?next={% url 'home' %}" class="nav-link px-2 link-dark">Login</a></li>
   {% endif %} 
-  <li class= "nav-link px-2 link-dark">Você é {% firstof user.username "visitante" %}</li>
+  <li class= "nav-link px-2 link-dark">Você é {% firstof user.usuario "visitante" %}</li>
 </ul>
 <hr> 
 {% block content %}{% endblock %} 

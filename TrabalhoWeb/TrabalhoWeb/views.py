@@ -10,20 +10,15 @@ from django.contrib.auth.views import LoginView
 # Create your views here.
 def home(request):
     try:
-        usuario = Usuario.objects.get(pk=request.user.username)
-        if usuario.tipo == "EMPRESA":
+        if request.user.tipo == "EMPRESA":
             return render(request, 'TrabalhoWeb/registro/homeEmpresa.html')
         else:
-            print(usuario.tipo)
             return render(request, 'TrabalhoWeb/registro/homeCandidato.html')
     except:
         return render(request, 'TrabalhoWeb/registro/registro.html')
 
 def loginHome(request):
     return render(request, 'TrabalhoWeb/login.html')
-
-def paginaSecreta(request):
-    return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
 
 def SegundaPagina(request):
     return render(request, 'TrabalhoWeb/criaCandidato.html')
@@ -35,31 +30,14 @@ def registro(request):
     if request.method == 'POST': 
         formulario = UserCreationForm(request.POST) 
         if formulario.is_valid(): 
-            formulario.save() 
-            return redirect('sec-login') 
+            formulario.save()
+            if request.POST["tipo"] == "EMPRESA":
+                return redirect('cria-empresa') 
+            return redirect('cria-candidato')
     else: 
-        formulario = UserCreationForm() 
+        formulario = UserCreationForm()
     context = {'form': formulario} 
     return render(request, 'TrabalhoWeb/registro/registro.html', context)
-
-def paginaSecreta(request): 
-    if request.method == 'POST': 
-        formulario = UsuarioModel2Form(request.POST)
-        print(formulario)
-        if formulario.is_valid():
-            usuario = formulario.save()
-            usuario.save()
-            return HttpResponseRedirect(reverse_lazy("sec-paginaSecreta"))
-        else:
-            return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
-    else:
-        try:
-            usuario = Usuario.objects.get(pk=request.user.username)
-            if usuario:
-                print("redirect")
-                return redirect('home')
-        except:
-            return render(request, 'TrabalhoWeb/registro/paginaSecreta.html')
 
 class UsuarioView(View):
     def get(self, request, *args, **kwargs):
