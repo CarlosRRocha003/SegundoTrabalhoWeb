@@ -10,8 +10,12 @@
 {% if user.is_authenticated %} 
 <body> 
     <table> 
-        <tr> 
-        <td><a href="{% url 'cria-candidato' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Criar curriculo"></a></td> 
+        <tr>      
+        {% if candidato == None %} 
+        <td><a href="{% url 'cria-candidato' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Criar curriculo"></a></td>
+        {% else %}
+        <td><a href="{% url 'ver-candidato' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Ver curriculo"></a></td>
+        {% endif %} 
         <td><a href="{% url 'lista-empresa' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Ver empresas"></a></td>
         </tr> 
     </table> 

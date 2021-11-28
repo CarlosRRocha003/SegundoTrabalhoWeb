@@ -24,14 +24,18 @@ import TrabalhoWeb.views
 from TrabalhoWeb import views
 
 urlpatterns = [
-    path('', LoginView.as_view(template_name='TrabalhoWeb/registro/login.html'), name='sec-login'), 
-    path('accounts/', views.homeSec, name='sec-home'),
+    path('', views.home, name='home'),
     path('accounts/login/', LoginView.as_view(template_name='TrabalhoWeb/registro/login.html'), name='sec-login'), 
     path('accounts/registro/', views.registro, name='sec-registro'),
-    path('accounts/home/', views.home, name='home'),
-    path('logout/', LogoutView.as_view( next_page=reverse_lazy('sec-home')), name='sec-logout'),
+    path('accounts/profile/', views.ProfileView.as_view(), name='profile'),
+    path('home', views.home, name='home'),
+    path('logout/', LogoutView.as_view(next_page=reverse_lazy('sec-login')), name='sec-logout'),
     path('CriaCandidato', views.CandidatoView.as_view(), name='cria-candidato'),
     path('ListaCandidato', views.CandidatoListView.as_view(), name='lista-candidato'),
     path('CriaEmpresas', views.EmpresaView.as_view(), name='cria-empresa'),
-    path('ListaEmpresas', views.EmpresaListView.as_view(), name='lista-empresa')
+    path('ListaEmpresas', views.EmpresaListView.as_view(), name='lista-empresa'),
+    path('apagaCandidato/<pk>/', views.CandidatoDeleteView.as_view(), name = 'apaga-candidato'),
+    path('atualizaCandidato', views.CandidatoUpdateView.as_view(), name = 'atualiza-candidato'),
+    path('verCandidato', views.verCandidato, name='ver-candidato'),
+    path('verEmpresa', views.verEmpresa, name='ver-empresa'),
 ]

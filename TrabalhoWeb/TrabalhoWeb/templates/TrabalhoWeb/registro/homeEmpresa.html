@@ -11,8 +11,11 @@
 <body> 
     <table> 
         <tr> 
-        <td><a href="{% url 'cria-empresa' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Registrar"></a></td> 
+        {% if empresa == None %} 
+        <td><a href="{% url 'cria-empresa' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Registrar"></a></td>
+        {% else %}
         <td><a href="{% url 'lista-candidato' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Ver candidatos"></a></td>
+        {% endif %} 
         </tr> 
     </table> 
 </body>

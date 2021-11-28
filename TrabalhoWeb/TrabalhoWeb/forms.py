@@ -6,13 +6,12 @@ class CandidatoModel2Form(forms.ModelForm):
     
     class Meta:
         model = Candidato
-        fields = '__all__'
+        fields = ('nome', 'email', 'telefone', 'dtNasc', 'cidade', 'estado', 'pais', 'descricao', 'experiencia', 'formacao', 'cargo', 'estadoCivil', 'sexo', 'endereco')
 
 class UsuarioModel2Form(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = '__all__'
-
 
 class EmpresaModel2Form(forms.ModelForm):
     class Meta:

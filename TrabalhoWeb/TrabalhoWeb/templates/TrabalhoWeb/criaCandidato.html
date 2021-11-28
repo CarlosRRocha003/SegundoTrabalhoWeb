@@ -12,7 +12,8 @@
     <form action="" method="POST">
     {% csrf_token %}
     <div class="form-group">
-        <table class='formulario'>
+        <table class='formulario'>    
+        <input type="hidden" id="usuario" name="usuario" value={{ user.usuario }} readonly></input>
         {{ formulario.as_table}}
         </table>
     </div>
