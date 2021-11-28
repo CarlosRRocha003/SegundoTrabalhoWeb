@@ -1,6 +1,5 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
-from django.contrib.auth.models import User
 
 USER_CHOICES = (
     ("EMPRESA", "Empresa"),
@@ -55,6 +54,7 @@ class Usuario(AbstractBaseUser):
         return self.is_admin
 
 class Empresa(models.Model):
+    usuario = models.CharField(max_length=100, help_text='Nome', primary_key=True)
     nome = models.CharField(max_length=100, help_text='Nome')
     email = models.EmailField(help_text='Email', max_length=254)
     telefone = models.CharField(help_text='Telefone com DDD e DDI da empresa', max_length=20)
@@ -66,6 +66,7 @@ class Empresa(models.Model):
         return self.nome
 
 class Candidato(models.Model):
+    usuario = models.CharField(help_text='Usuario', max_length=254, primary_key=True)
     nome = models.CharField(max_length=100, help_text='Nome')
     email = models.EmailField(help_text='Email', max_length=254)
     telefone = models.CharField(help_text='Telefone com DDD e DDI', max_length=20)

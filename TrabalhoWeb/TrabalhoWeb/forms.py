@@ -14,7 +14,8 @@ class UsuarioModel2Form(forms.ModelForm):
         fields = '__all__'
 
 
-class EmpresaModel2Form(forms.ModelForm):   
+class EmpresaModel2Form(forms.ModelForm):
     class Meta:
         model = Empresa
-        fields = '__all__'
+        fields = ('nome', 'email', 'telefone', 'endereco', 'descricao')
+

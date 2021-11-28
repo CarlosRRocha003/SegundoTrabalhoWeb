@@ -39,21 +39,6 @@ def registro(request):
     context = {'form': formulario} 
     return render(request, 'TrabalhoWeb/registro/registro.html', context)
 
-class UsuarioView(View):
-    def get(self, request, *args, **kwargs):
-        context = { 'formulario': UsuarioModel2Form, }
-        return render(request,"TrabalhoWeb/criaUsuario.html", context)
-
-    def post(self, request, *args, **kwargs):
-        formulario = UsuarioModel2Form(request.POST)
-        if formulario.is_valid():
-            usuario = formulario.save()
-            usuario.save()
-            return HttpResponseRedirect(reverse_lazy("lista-usuario"))
-        else:
-            context = {'usuario': formulario, }
-            return render(request, 'TrabalhoWeb/atualizaUsuario.html', context)
-
 class CandidatoView(View):
     def get(self, request, *args, **kwargs):
         context = { 'formulario': CandidatoModel2Form, }
@@ -64,7 +49,7 @@ class CandidatoView(View):
         if formulario.is_valid():
             candidato = formulario.save()
             candidato.save()
-            return HttpResponseRedirect(reverse_lazy("lista-candidato"))
+            return HttpResponseRedirect(reverse_lazy("sec-login"))
         else:
             context = {'candidato': formulario, }
             return render(request, 'TrabalhoWeb/atualizaCandidato.html', context)
@@ -78,8 +63,9 @@ class EmpresaView(View):
         formulario = EmpresaModel2Form(request.POST)
         if formulario.is_valid():
             empresa = formulario.save()
+            empresa.usuario = request.POST["usuario"]
             empresa.save()
-            return HttpResponseRedirect(reverse_lazy("lista-empresa"))
+            return HttpResponseRedirect(reverse_lazy("sec-login"))
         else:
             context = {'empresa': formulario, }
             return render(request, 'TrabalhoWeb/atualizaEmpresa.html', context)

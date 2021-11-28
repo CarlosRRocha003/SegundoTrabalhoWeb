@@ -10,6 +10,7 @@
     <form action="" method="POST">
     {% csrf_token %}
     <table class='formulario'>
+    <input type="hidden" id="usuario" name="usuario" value={{ user.usuario }} readonly></input>
     {{ formulario.as_table}}
     </table>
     <button type="submit">Cria Empresa</button>
