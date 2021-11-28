@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.base import View
-from django.http.response import HttpResponseRedirect
+from django.http.response import HttpResponseRedirect, JsonResponse
 from django.urls.base import reverse_lazy
 from TrabalhoWeb.models import Candidato, Usuario, Empresa
 from TrabalhoWeb.forms import CandidatoModel2Form, UsuarioModel2Form, EmpresaModel2Form
 from django.contrib.auth import authenticate, login
 from TrabalhoWeb.admin import UserCreationForm
 from django.contrib.auth.views import LoginView
+from django.template import RequestContext
+import datetime
 # Create your views here.
 def home(request):
     try:
@@ -58,9 +60,16 @@ class CandidatoView(View):
 
     def post(self, request, *args, **kwargs):
         formulario = CandidatoModel2Form(request.POST)
+        print(request.POST)
         if formulario.is_valid():
+            print("---------------------------------------------------------------------------OIIIIIII")
             candidato = formulario.save()
+            print("---------------------------------------------------------------------------OIIIIIII")
             candidato.usuario = request.POST["usuario"]
+            print("---------------------------------------------------------------------------OIIIIIII")
+            candidato.dtNasc = request.POST["dtNasc"]
+            print("---------------------------------------------------------------------------OIIIIIII")
+            print(candidato.dtNasc)
             candidato.save()
             return HttpResponseRedirect(reverse_lazy("ver-candidato"))
         else:
@@ -160,3 +169,28 @@ class EmpresaView(View):
         else:
             context = {'empresa': formulario, }
             return render(request, 'TrabalhoWeb/atualizaEmpresa.html', context)
+
+def handler404(request, *args, **argv):
+    response = render('404.html', {}, context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render('500.html', {}, context_instance=RequestContext(request))
+    response.status_code = 500
+    return response
+
+def verificaDtNasc(request):
+    dtNasc = request.GET.get("dtNasc", None)
+    date2 = dtNasc.split("-")
+    year = int(date2[0])
+    month = int(date2[1])
+    day = int(date2[2])
+    d = datetime.date(year,month,day)
+    today = datetime.date.today()
+    if today > d:
+        resposta = {'valido': True}
+    else:
+        resposta = {'valido': False}
+    return JsonResponse(resposta)
