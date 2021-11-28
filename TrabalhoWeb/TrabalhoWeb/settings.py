@@ -27,9 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-TIME_ZONE = 'America/Sao_Paulo'
-LANGUAGE_CODE = 'pt-BR'
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -111,9 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Sao_Paulo'
+LANGUAGE_CODE = 'pt-BR'
 
 USE_I18N = True
 
@@ -133,3 +130,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configure Django App for Heroku.
+try:
+ import django_heroku
+ django_heroku.settings(locals())
+except:
+ pass
