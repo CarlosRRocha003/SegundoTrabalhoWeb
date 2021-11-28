@@ -4,15 +4,15 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Apaga Candidato</title>
+    <title>Apaga Empresa</title>
 </head>
 <body>
-    <h1>Remoção de Candidatos</h1>
+    <h1>Remoção de Empresa</h1>
     <form method="POST">
         {% csrf_token %}
-        Confirma a remoção de {{ candidato.nome }}?<br>
+        Confirma a remoção de {{ empresa.nome }}?<br>
         <button>
-            <a href="{% url 'ver-candidato' %}"style="text-decoration: none; color: black;">Cancela</a>
+            <a href="{% url 'lista-empresa' %}"style="text-decoration: none; color: black;">Cancela</a>
         </button>
         <input type="submit" value="Remove">
     </form>

@@ -18,7 +18,7 @@
         <tr>
         <td>{{ empresa.nome }}</td><td>{{empresa.email }}</td><td>{{ empresa.telefone }}</td><td>{{ empresa.endereco }}</td><td>{{ empresa.descricao }}</td>
         <td>
-            <a href="">
+            <a href="{% url 'atualiza-empresa' %}">
             <button type="button" class="btn btn-primary btn-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
                     <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
@@ -26,10 +26,21 @@
                 </svg>
             </button>
             </a>
+            <td>   
+                <a href="{% url 'apaga-empresa' %}">
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-person" viewBox="0 0 16 16">
+                            <path d="M12 1a1 1 0 0 1 1 1v10.755S12 11 8 11s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h8zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4z"/>
+                            <path d="M8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg>
+                    </button>
+                </a>
+            </td>
         </td>
         </tr>
         {% else %}
-        <tr><th colspan="5">Você ainda não cadastrou uma empresa.</th></tr>
+        <tr><th colspan="50%">Você ainda não cadastrou uma empresa.</th></tr>
+        <tr><th colspan="50%"><a href="{% url 'cria-empresa' %}" class="nav-link px-2 link-dark"><input class="btn btn-primary btn-sm" value="Criar empresa"></a></th></tr>
         {% endif %}
     </table>
 </body>

@@ -10,16 +10,18 @@
 <body style="text-align: center;"> 
 <h5 class="display-6">Curriculos Org</h1> 
 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-  <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
-  {% if user.is_authenticated %} 
-  <li><a href="{% url 'sec-logout' %}" class="nav-link px-2 link-dark">Logout</a></li>
   {% if user.tipo == "EMPRESA" %}
-  <li><a href="{% url 'ver-empresa' %}" class="nav-link px-2 link-dark">Ver empresa</a></li>
+  <li><a href="{% url 'ver-empresa' %}" class="nav-link px-2 link-secondary">Home</a></li>
+  {% else %}
+  <li><a href="{% url 'ver-candidato' %}" class="nav-link px-2 link-secondary">Home</a></li>
+  {% endif %}
+  {% if user.is_authenticated %} 
+  {% if user.tipo == "EMPRESA" %}
   <li><a href="{% url 'lista-candidato' %}" class="nav-link px-2 link-dark">Ver candidatos</a></li>
   {% else %}
   <li><a href="{% url 'lista-empresa' %}" class="nav-link px-2 link-dark">Ver empresas</a></li>
-  <li><a href="{% url 'ver-candidato' %}" class="nav-link px-2 link-dark">Ver perfil</a></li>
   {% endif %}
+  <li><a href="{% url 'sec-logout' %}" class="nav-link px-2 link-dark">Logout</a></li>
   {% endif %} 
   <li class= "nav-link px-2 link-dark">Olá, {% firstof user.usuario "visitante" %}!</li>
 </ul>

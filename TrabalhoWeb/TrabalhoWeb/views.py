@@ -10,22 +10,18 @@ from django.contrib.auth.views import LoginView
 # Create your views here.
 def home(request):
     try:
-        print("oi")
         if request.user.tipo == "EMPRESA":
-            return render(request, 'TrabalhoWeb/registro/homeEmpresa.html')
+            return redirect('ver-empresa')
         else:
-            return render(request, 'TrabalhoWeb/registro/homeCandidato.html')
+            return redirect('ver-candidato')
     except:
         return redirect('sec-login')
 
 def loginHome(request):
     return render(request, 'TrabalhoWeb/login.html')
 
-def SegundaPagina(request):
-    return render(request, 'TrabalhoWeb/criaCandidato.html')
-
-def homeSec(request): 
-    return render(request, "TrabalhoWeb/registro/homeSec.html")
+def profile(request):
+    return redirect('home')
 
 def verCandidato(request):
     user = request.user
@@ -55,24 +51,6 @@ def registro(request):
         formulario = UserCreationForm()
     context = {'form': formulario} 
     return render(request, 'TrabalhoWeb/registro/registro.html', context)
-
-class ProfileView(View):
-    def get(self, request, *args, **kwargs):
-        user = request.user
-        if user.tipo == "EMPRESA":
-            try:
-                empresa = Empresa.objects.get(pk=user.usuario)
-            except:
-                empresa = None
-            context = { 'Empresa': empresa }
-            return render(request,"TrabalhoWeb/registro/homeEmpresa.html", context)
-        try:
-            candidato = Candidato.objects.get(pk=user.usuario)
-        except:
-            candidato = None
-        context = { 'candidato': candidato }
-        return render(request,"TrabalhoWeb/registro/homeCandidato.html", context)
-
 class CandidatoView(View):
     def get(self, request, *args, **kwargs):
         context = { 'formulario': CandidatoModel2Form, }
@@ -84,7 +62,7 @@ class CandidatoView(View):
             candidato = formulario.save()
             candidato.usuario = request.POST["usuario"]
             candidato.save()
-            return HttpResponseRedirect(reverse_lazy("sec-login"))
+            return HttpResponseRedirect(reverse_lazy("ver-candidato"))
         else:
             context = {'candidato': formulario, }
             return render(request, 'TrabalhoWeb/atualizaCandidato.html', context)
@@ -96,16 +74,50 @@ class CandidatoListView(View):
     return render(request,'TrabalhoWeb/listaCandidato.html', context)
 
 class CandidatoDeleteView(View):
-    def get(self, request, pk, *args, **kwargs):
-        candidato = Candidato.objects.get(pk=pk)
+    def get(self, request, *args, **kwargs):  
+        user = request.user
+        candidato = Candidato.objects.get(pk=user.usuario)
         context = {'candidato': candidato, }
         return render(request, 'TrabalhoWeb/apagaCandidato.html', context)
 
-    def post(self, request, pk, *args, **kwargs):
-        candidato = Candidato.objects.get(pk=pk)
+    def post(self, request, *args, **kwargs):  
+        user = request.user
+        candidato = Candidato.objects.get(pk=user.usuario)
         candidato.delete()
-        print("Removendo o candidato", pk)
-        return HttpResponseRedirect(reverse_lazy("lista-candidato"))
+        return HttpResponseRedirect(reverse_lazy("ver-candidato"))
+
+class EmpresaDeleteView(View):
+    def get(self, request, *args, **kwargs):  
+        user = request.user
+        empresa = Empresa.objects.get(pk=user.usuario)
+        context = {'empresa': empresa, }
+        return render(request, 'TrabalhoWeb/apagaEmpresa.html', context)
+
+    def post(self, request, *args, **kwargs):  
+        user = request.user
+        empresa = Empresa.objects.get(pk=user.usuario)
+        empresa.delete()
+        return HttpResponseRedirect(reverse_lazy("ver-empresa"))
+
+class EmpresaUpdateView(View):
+    def get(self, request, *args, **kwargs):   
+        user = request.user
+        empresa = Empresa.objects.get(pk=user.usuario)
+        formulario = EmpresaModel2Form(instance=empresa)
+        context = {'empresa': formulario, }
+        return render(request, 'TrabalhoWeb/atualizaEmpresa.html', context)
+
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        empresa = get_object_or_404(Empresa, pk=user.usuario)
+        formulario = EmpresaModel2Form(request.POST, instance=empresa)
+        if formulario.is_valid():
+            empresa = formulario.save()
+            empresa.save()
+            return HttpResponseRedirect(reverse_lazy("ver-empresa"))
+        else:
+            context = {'empresa': formulario, }
+            return render(request, 'TrabalhoWeb/atualizaEmpresa.html', context)
 
 class CandidatoUpdateView(View):
     def get(self, request, *args, **kwargs):   
@@ -144,7 +156,7 @@ class EmpresaView(View):
             empresa = formulario.save()
             empresa.usuario = request.POST["usuario"]
             empresa.save()
-            return HttpResponseRedirect(reverse_lazy("sec-login"))
+            return HttpResponseRedirect(reverse_lazy("ver-empresa"))
         else:
             context = {'empresa': formulario, }
             return render(request, 'TrabalhoWeb/atualizaEmpresa.html', context)
