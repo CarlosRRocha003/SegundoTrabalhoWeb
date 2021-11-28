@@ -1,16 +1,58 @@
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.contrib.auth.models import User
 
 USER_CHOICES = (
     ("EMPRESA", "Empresa"),
     ("CANDIDATO", "Candidato")
 )
 
-class Usuario(models.Model):
+class UsuarioManager(BaseUserManager):
+    def create_user(self, usuario, tipo, password=None):
+        """
+        Creates and saves a User with the given email, date of
+        birth and password.
+        """
+        if not usuario:
+            raise ValueError('Users must have an username')
+
+        user = self.model(
+            usuario=self.usuario,
+            tipo=tipo,
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+class Usuario(AbstractBaseUser):
     usuario = models.CharField(max_length=100, help_text='Usuario', primary_key=True)
     tipo = models.CharField(choices=USER_CHOICES, max_length=10)
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+
+    objects = UsuarioManager()
+
+    USERNAME_FIELD = "usuario"
 
     def __str__(self):
         return self.usuario
+
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
 
 class Empresa(models.Model):
     nome = models.CharField(max_length=100, help_text='Nome')

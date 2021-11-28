@@ -5,7 +5,7 @@ from django.urls.base import reverse_lazy
 from TrabalhoWeb.models import Candidato, Usuario, Empresa
 from TrabalhoWeb.forms import CandidatoModel2Form, UsuarioModel2Form, EmpresaModel2Form
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
+from TrabalhoWeb.admin import UserCreationForm
 from django.contrib.auth.views import LoginView
 # Create your views here.
 def home(request):
@@ -45,6 +45,7 @@ def registro(request):
 def paginaSecreta(request): 
     if request.method == 'POST': 
         formulario = UsuarioModel2Form(request.POST)
+        print(formulario)
         if formulario.is_valid():
             usuario = formulario.save()
             usuario.save()
