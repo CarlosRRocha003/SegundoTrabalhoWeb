@@ -8,6 +8,7 @@
 <link rel = "stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
 <body style="text-align: center;">
+    {% if user.is_authenticated %} 
     <h1>Cria um Empresa</h1>
     <form action="" method="POST" style="display: inline-block;">
     {% csrf_token %}
@@ -19,6 +20,7 @@
     <button class="btn btn-primary" type="submit">Cria Empresa</button>
     </div>
     </form>
+    {% endif %} 
 </body>
 </html>
 {% endblock %}
