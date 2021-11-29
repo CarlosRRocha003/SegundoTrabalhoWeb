@@ -3,10 +3,8 @@ const selectElement = document.querySelector('.datao');
 selectElement.addEventListener('change', function () {
         // recupera o campo username do formulário
         var campoDtNasc = document.getElementById('dtNasc');
-        console.log('Mudou ', campoDtNasc.value);
         // cria o objeto HTTP Request e abre a conexão
         var xmlhttp = new XMLHttpRequest();
-        console.log("{% url 'verificaDtNasc' %}?dtNasc=" + encodeURIComponent(campoDtNasc.value));
         xmlhttp.open("GET",'/verificaDtNasc?dtNasc=' + encodeURIComponent(campoDtNasc.value), true);
         // Função de callback
         xmlhttp.onreadystatechange = function () {

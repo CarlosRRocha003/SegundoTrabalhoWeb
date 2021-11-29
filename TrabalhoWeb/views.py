@@ -62,14 +62,9 @@ class CandidatoView(View):
         formulario = CandidatoModel2Form(request.POST)
         print(request.POST)
         if formulario.is_valid():
-            print("---------------------------------------------------------------------------OIIIIIII")
-            candidato = formulario.save()
-            print("---------------------------------------------------------------------------OIIIIIII")
+            candidato = formulario.save(commit=False)
             candidato.usuario = request.POST["usuario"]
-            print("---------------------------------------------------------------------------OIIIIIII")
             candidato.dtNasc = request.POST["dtNasc"]
-            print("---------------------------------------------------------------------------OIIIIIII")
-            print(candidato.dtNasc)
             candidato.save()
             return HttpResponseRedirect(reverse_lazy("ver-candidato"))
         else:
@@ -121,7 +116,7 @@ class EmpresaUpdateView(View):
         empresa = get_object_or_404(Empresa, pk=user.usuario)
         formulario = EmpresaModel2Form(request.POST, instance=empresa)
         if formulario.is_valid():
-            empresa = formulario.save()
+            empresa = formulario.save(commit=False)
             empresa.save()
             return HttpResponseRedirect(reverse_lazy("ver-empresa"))
         else:
@@ -141,7 +136,7 @@ class CandidatoUpdateView(View):
         candidato = get_object_or_404(Candidato, pk=user.usuario)
         formulario = CandidatoModel2Form(request.POST, instance=candidato)
         if formulario.is_valid():
-            candidato = formulario.save()
+            candidato = formulario.save(commit=False)
             candidato.save()
             return HttpResponseRedirect(reverse_lazy("ver-candidato"))
         else:
@@ -162,7 +157,7 @@ class EmpresaView(View):
     def post(self, request, *args, **kwargs):
         formulario = EmpresaModel2Form(request.POST)
         if formulario.is_valid():
-            empresa = formulario.save()
+            empresa = formulario.save(commit=False)
             empresa.usuario = request.POST["usuario"]
             empresa.save()
             return HttpResponseRedirect(reverse_lazy("ver-empresa"))
